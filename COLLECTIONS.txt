@@ -1,0 +1,146 @@
+cCOLLECTIONS
+
+The java collections framework is a unified architecture for storing and manipulating groups of objects.
+It provides: interfaces - define behavior , classes - implement behavior, algo - used for operations.
+-They are grow-able in nature
+-Can hold homogeneous or heterogeneous
+-Recommended to use to stop memory wastage as it grows on demand.
+-In built data structure and algorithms
+-can only hold object types.
+
+CORE DESIGN PHILOSOPHY:
+All collections are built on four fundamental data structure concepts:
+1.Dynamic arrays, 2.Linked Nodes, 3.Hashing , 4.Trees
+Every collection internally uses one or a combination of these.
+
+COLLECTION:
+List, Set, Queue                                                                                                                
+
+LIST(ORDERED, INDEXED):
+It maintains insertion order and allows duplicates.
+-order preservation, index-bases access, allows duplicates
+
+Array List:
+An array list is a resizable array implementation of the list interface. Unlike arrays, which have a fixed size, these change its size dynamically as elements are added or removed. this flexibility makes it a popular choice when the number of elements in a list isn't know in advance.
+Internal working: Unlike a regular array, which has a fixed size, an array list can grow and shrink as elements are added or remove. This dynamic resizing is achieved by creating a new array when the current array is full and copying the elements to the array.
+
+-When u create an array list it has an initial capacity is 10. The capacity refers to the size of the internal array that can hold elements before needing to resize.
+-When u add an element to an array list, the following steps occur:
+1.Check capacity: Before adding the new element, array list checks if there is enough space in the internal array(element data). If the array is full, it needs to be resized.
+2.Resize if necessary: If the internal array is full, the array List will create a new array with a larger capacity(usually 1.5 times the current capacity) and copy the elements from the old array to the new array.
+3.Add the element: The new element is then added to the internal array at the appropriate index, and the size incremented.
+
+Resizing the Array:
+1.Intitial capacity: By default, the initial capacity is 10. this means the internal array can hold 10 elements before it needs to grow.
+2.Growth factor: when the internal array is full, a new array is created with a size 1.5 times the old array. This growth factor balances memory efficiency and resizing cost.
+3.Copying elements: when resizing occurs, all elements from the old array are copied to the new array, which is an o(n) operation, where n is the number of elements in the array list.
+
+
+Internal data structure - Dynamic array
+working - It starts with a fixed size array, when capacity is full -> creates larger array, copies elements to new array
+Key concept - increase size by 50% and reduces frequent resizing cost
+Performance Reasoning - fast access: direct index lookup, slow insertion/deletion: needs shifting
+
+LinkedList:
+The linked list class in java is a part of the collection framework and implements the list interface. Unlike an array list, which uses a dynamic array to store the elements, a linked list stores its elements as nodes in a doubly linked list. This provides different performance characteristics and usage scenarios compared to array list.
+-it is a linear data structure where each element is a separate object called a node. Each node contains two parts:
+1.Data: the value stored in the node.
+2.Pointers: Two pointers, one pointing to the next node and the other pointing to the previous node.
+
+Performance considerations:
+1.Insertions and deletions: linked list is better for frequent insertions and deletions in the middle of the list because it does not require shifting elements, as in array list.
+2.Random access: linked list has slower random access(get)int index)) compared to array list because it has to traverse the list from beginning to reach the desired index.
+3.Memory Overhead: linked list required more memory than array list because each node in a linked list required more memory than array list because each node in al linked list required extra memory to store references to the next and previous nodes.
+
+Internal data structure - Doubly linked list
+Structure - Each element is a node with: data, pointer to next, pointer to previous
+Working - Elements are not stored contiguously and each node connects to another via pointers
+Key properties: fast insertion/deletion, slow access(must traverse)
+
+VECTOR:
+A Vector in Java is a part of the java. util package and is one of the legacy classes in java that implements the list interface.
+-It was introduced in JDK 1.0 before collection framework and is synchronized, making it thread safe.
+-Due to its synchronization overhead, its generally recommended to use other modern alternatives like array list in single-threaded scenarios.
+Despite this, vector is still useful in certain situations, particularly in multi-threaded environments where safety is a concern.
+
+Key features of vector:
+Dynamic array - Like array list, vector is a dynamic array that grows automatically when more elements are added than its current capacity.
+Synchronized- All the methods in vector are synchronized, which makes it thread-safe, this means multiple threads can work on a vector without the risk of corrupting the data. However, this can introduce performance overhead in single- threaded environments.
+Legacy class - Vector was part of java's original release and is considered a legacy class. Its generally recommended to use array list in single-threaded environments due to performance considerations.
+Resizing mechanism - when the current capacity of the vector is exceeded, it doubles its size by default(or increases by a specific capacity increment if provided).
+Random access - similar to arrays and arraylist, vector allows random access to elements, making it efficient for accessing elements using an index.
+
+Constructors of Vector:
+vector - creates a vector with an initial capacity of 10.
+Vector(int initial capacity) - creates a vector with a specified initial capacity.
+vector(int initial capacity, int capacity increment) - creates a vector with an initial capacity and capacity increment          
+vector(collection<? extends E>c) - creates a vector containing the elements of the specified collection.
+
+Internal implantation of vector: Internally it uses an array to store its elements. The size of this array grows as needed when more elements are added. The default behavior is to double the size of the array when it runs out of space. This resizing operation is a costly one, as it requires copying the old elements to the new, larger array.
+
+SET(UNIQUE ELEMENTS)
+No duplicated allowed and no indexing.              
+         
+HashSet:
+Uses HashMap internally
+Working: Object-> HashCode(), hash converted to index, stored in bucket
+-Uniqueness in ensured using: Hash Code(), equals()
+- if both match -> duplicate
+
+LinkedHashSet:
+structure: hashSet + Linked List
+Purpose: Maintains insertion order  
+
+TreeSet:
+Structure: Balanced Binary Search Tree
+Properties: Elements are sorted automatically and no duplicates
+Core Behavior: Maintains order using comparisons and self-balancing after insertion.
+
+
+MAP(Key-Value Storage)
+It stores pairs(key -> value)
+Keys must be unique
+-In java, a Map is an object that maps keys to values. It cannot contain duplicate keys, and each key can map to at most one value. Think of it as a dictionary where you look up a word(key) to find its definition(value).
+
+Key characteristics of the Map Interface:
+Key-value pairs: Each entry in a map consists of a key and a value.
+Unique Keys: No two entries  can have the same key.
+One value per key: Each key maps to a single value.
+Order: some implementations maintain insertion order
+
+HashMap:
+Internal Structure: combination of array(buckets) and linked list/tree(for collisions)
+- There are four basic components of HashMap(key, value -> the data associated with the key, bucket -> a place where key-value pairs are stored. Think of buckets as cells in a list(array), hash function -> Converts a key into an index(bucket location) for storage)
+working: key-> hash Code(), Hash converted into index, value stored in that bucket
+
+collision concept: when multiple keys map to same index: they are stored in linked list(initially) or converted to tree if large
+
+When to Use What:
+
+Fast search -> HashMap
+Ordered list -> Array List
+Frequent insert/delete - LinkedList
+Unique elements - HashSet
+Sorted data - Tree Set/Tree Map
+
+
+Collection: The root interface for all the other collection types.
+List: An ordered collection that can contain duplicate elements
+Set: A collection that cannot contain duplicate elements
+Queue: A collection designed for holding elements prior to processing
+Deque: A double-ended queue that allows insertion and removal from both ends
+Map: An interface represents a collection of key-value pairs.
+
+COMPARATOR:
+It is an interface with help of which we can do custom ordering of the elements.
+
+                                       
+HashMap is a non-thread-safe collection used for storing key-value pairs. It allows one null key and multiple null values. If multiple threads modify it concurrently, it can lead to inconsistent results.
+ConcurrentHashMap is a thread-safe implementation designed for concurrent environments. In Java 8+, it uses CAS and fine-grained locking instead of locking the entire map, allowing better performance. It does not allow null keys or null values and provides weakly consistent iterators that do not throw ConcurrentModificationException.
+
+Memory Trick
+
+HashMap → Fast but Not Safe
+ConcurrentHashMap → Safe and Concurrent ✅
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  

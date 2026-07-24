@@ -1,0 +1,43 @@
+STREAMS, FUNCTIONAL INTERFACES AND LAMDA EXPRESSION
+
+Functional Interfaces:
+A Functional interface is an interface that has exactly one abstract method. It represents a single unit of behavior.
+-They exist because before java 8 we had to write full classes or anonymous classes for small behavior and to support lambda expressions.
+-They are used represent behavior as data and enable functional programming in java.
+Internal concept -- input->process->output
+
+Internal Representation:
+Runnable r = ()->{};
+JVM creates an instance of the interface and Lambda is converted into a method implementation.
+
+Types of Functional Interfaces:
+1.Predicate: input->Boolean
+2.Function: input->output
+3.Consumer: input->no output
+4.Supplier: No input -> output
+
+Streams:
+Streams are used to process collections in a functional + declarative way.
+Internal pipeline -- source -> Intermediate -> terminal
+Source:
+1.Collection, 2.Array, 3.File
+
+Intermediate Operations:
+1.filter, 2.map, 3.sorted - these are lazy operations.
+
+Terminal Operations:
+1.forEach, 2.collect, 3.reduce - triggers execution
+
+Internal working:
+list.Stream().filter().map().collect()
+
+Step 1: Stream creation
+stream()->pipeline
+Step 2: Intermediate operations added
+pipeline stage
+Step 3: Terminal operation called
+collect()
+
+Lazy Evaluation
+before: filter all->map all
+after: filter first element -> map -> move next
